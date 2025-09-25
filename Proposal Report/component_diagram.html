@@ -1,0 +1,384 @@
+<svg viewBox="0 0 1600 1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Component styling -->
+    <linearGradient id="componentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E3F2FD;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#BBDEFB;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="interfaceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFF3E0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFE0B2;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Arrow markers -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333"/>
+    </marker>
+    <marker id="provided" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <circle cx="4" cy="4" r="3" fill="white" stroke="#2196F3" stroke-width="2"/>
+    </marker>
+    <marker id="required" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <circle cx="4" cy="4" r="3" fill="white" stroke="#FF5722" stroke-width="2"/>
+      <path d="M1,4 L7,4 M4,1 L4,7" stroke="#FF5722" stroke-width="1"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1600" height="1200" fill="#FAFAFA"/>
+  
+  <!-- Title -->
+  <text x="800" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1565C0">
+    UML Component Diagram: AI-Based Garage Recommendation System
+  </text>
+  
+  <!-- Legend -->
+  <rect x="1350" y="60" width="230" height="140" fill="white" stroke="#666" stroke-width="1" rx="5"/>
+  <text x="1465" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Legend</text>
+  
+  <!-- Component symbol -->
+  <rect x="1370" y="90" width="60" height="30" fill="url(#componentGradient)" stroke="#2196F3" stroke-width="1"/>
+  <rect x="1385" y="85" width="30" height="8" fill="white" stroke="#2196F3" stroke-width="1"/>
+  <rect x="1385" y="95" width="20" height="6" fill="white" stroke="#2196F3" stroke-width="1"/>
+  <text x="1440" y="108" font-family="Arial, sans-serif" font-size="10">Component</text>
+  
+  <!-- Interface symbols -->
+  <circle cx="1375" cy="135" r="3" fill="white" stroke="#2196F3" stroke-width="2"/>
+  <text x="1390" y="139" font-family="Arial, sans-serif" font-size="10">Provided Interface</text>
+  
+  <circle cx="1375" cy="155" r="3" fill="white" stroke="#FF5722" stroke-width="2"/>
+  <path d="M1372,155 L1378,155 M1375,152 L1375,158" stroke="#FF5722" stroke-width="1"/>
+  <text x="1390" y="159" font-family="Arial, sans-serif" font-size="10">Required Interface</text>
+  
+  <line x1="1370" y1="175" x2="1410" y2="175" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1420" y="179" font-family="Arial, sans-serif" font-size="10">Dependency</text>
+  
+  <!-- Mobile App Component -->
+  <g id="mobileApp">
+    <rect x="50" y="80" width="280" height="200" fill="url(#componentGradient)" stroke="#2196F3" stroke-width="2" rx="8"/>
+    <rect x="90" y="70" width="80" height="15" fill="white" stroke="#2196F3" stroke-width="1"/>
+    <rect x="90" y="90" width="60" height="10" fill="white" stroke="#2196F3" stroke-width="1"/>
+    
+    <text x="190" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Mobile App</text>
+    <text x="190" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12">(User Interface)</text>
+    
+    <text x="70" y="150" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Sub-components:</text>
+    <text x="70" y="170" font-family="Arial, sans-serif" font-size="10">• Chatbot UI (text/voice input)</text>
+    <text x="70" y="185" font-family="Arial, sans-serif" font-size="10">• Booking UI</text>
+    <text x="70" y="200" font-family="Arial, sans-serif" font-size="10">• Progress Tracking UI</text>
+    <text x="70" y="215" font-family="Arial, sans-serif" font-size="10">• Feedback UI</text>
+    <text x="70" y="230" font-family="Arial, sans-serif" font-size="10">• Notification Display</text>
+    
+    <!-- Provided interfaces -->
+    <circle cx="340" cy="140" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="350" y="145" font-family="Arial, sans-serif" font-size="9">IUserInput</text>
+    
+    <circle cx="340" cy="180" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="350" y="185" font-family="Arial, sans-serif" font-size="9">IFeedback</text>
+    
+    <!-- Required interfaces -->
+    <circle cx="340" cy="220" r="4" fill="white" stroke="#FF5722" stroke-width="2"/>
+    <path d="M337,220 L343,220 M340,217 L340,223" stroke="#FF5722" stroke-width="1"/>
+    <text x="350" y="225" font-family="Arial, sans-serif" font-size="9">INotification</text>
+  </g>
+  
+  <!-- Chatbot/NLP Engine Component -->
+  <g id="chatbotNLP">
+    <rect x="450" y="80" width="250" height="150" fill="url(#componentGradient)" stroke="#2196F3" stroke-width="2" rx="8"/>
+    <rect x="480" y="70" width="80" height="15" fill="white" stroke="#2196F3" stroke-width="1"/>
+    <rect x="480" y="90" width="60" height="10" fill="white" stroke="#2196F3" stroke-width="1"/>
+    
+    <text x="575" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Chatbot/NLP Engine</text>
+    <text x="575" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12">(Rasa)</text>
+    
+    <text x="470" y="150" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Services:</text>
+    <text x="470" y="170" font-family="Arial, sans-serif" font-size="10">• Fault Category Extraction</text>
+    <text x="470" y="185" font-family="Arial, sans-serif" font-size="10">• Fault Type Extraction</text>
+    <text x="470" y="200" font-family="Arial, sans-serif" font-size="10">• Drivability Check (dialog flow)</text>
+    
+    <!-- Required interface -->
+    <circle cx="440" cy="140" r="4" fill="white" stroke="#FF5722" stroke-width="2"/>
+    <path d="M437,140 L443,140 M440,137 L440,143" stroke="#FF5722" stroke-width="1"/>
+    
+    <!-- Provided interface -->
+    <circle cx="710" cy="155" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="720" y="160" font-family="Arial, sans-serif" font-size="9">IFaultAnalysis</text>
+  </g>
+  
+  <!-- Decision Module Component -->
+  <g id="decisionModule">
+    <rect x="800" y="80" width="200" height="120" fill="url(#componentGradient)" stroke="#2196F3" stroke-width="2" rx="8"/>
+    <rect x="830" y="70" width="80" height="15" fill="white" stroke="#2196F3" stroke-width="1"/>
+    <rect x="830" y="90" width="60" height="10" fill="white" stroke="#2196F3" stroke-width="1"/>
+    
+    <text x="900" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Decision Module</text>
+    
+    <text x="820" y="135" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Logic:</text>
+    <text x="820" y="150" font-family="Arial, sans-serif" font-size="10">• Drivable → Garage</text>
+    <text x="820" y="165" font-family="Arial, sans-serif" font-size="10">• Not Drivable → Mechanic/Tow</text>
+    <text x="820" y="180" font-family="Arial, sans-serif" font-size="10">• Route determination</text>
+    
+    <!-- Required interface -->
+    <circle cx="790" cy="155" r="4" fill="white" stroke="#FF5722" stroke-width="2"/>
+    <path d="M787,155 L793,155 M790,152 L790,158" stroke="#FF5722" stroke-width="1"/>
+    
+    <!-- Provided interfaces -->
+    <circle cx="1010" cy="130" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="1020" y="135" font-family="Arial, sans-serif" font-size="9">IGarageRoute</text>
+    
+    <circle cx="1010" cy="170" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="1020" y="175" font-family="Arial, sans-serif" font-size="9">IMechanicRoute</text>
+  </g>
+  
+  <!-- Garage Recommendation System -->
+  <g id="garageSystem">
+    <rect x="50" y="320" width="400" height="180" fill="url(#componentGradient)" stroke="#2196F3" stroke-width="2" rx="8"/>
+    <rect x="80" y="310" width="120" height="15" fill="white" stroke="#2196F3" stroke-width="1"/>
+    <rect x="80" y="330" width="90" height="10" fill="white" stroke="#2196F3" stroke-width="1"/>
+    
+    <text x="250" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Garage Recommendation System</text>
+    
+    <text x="70" y="375" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Sub-components:</text>
+    
+    <!-- Google Maps API -->
+    <rect x="70" y="385" width="110" height="50" fill="url(#interfaceGradient)" stroke="#FF9800" stroke-width="1" rx="4"/>
+    <text x="125" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold">Google Maps API</text>
+    <text x="125" y="413" text-anchor="middle" font-family="Arial, sans-serif" font-size="8">Distance, ETA, Routes</text>
+    <text x="125" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="8">Nearest Garages</text>
+    
+    <!-- ML Model 1 -->
+    <rect x="190" y="385" width="100" height="50" fill="url(#interfaceGradient)" stroke="#4CAF50" stroke-width="1" rx="4"/>
+    <text x="240" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold">ML Model 1</text>
+    <text x="240" y="413" text-anchor="middle" font-family="Arial, sans-serif" font-size="8">Repair Time</text>
+    <text x="240" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="8">Prediction</text>
+    
+    <!-- ML Model 2 -->
+    <rect x="300" y="385" width="100" height="50" fill="url(#interfaceGradient)" stroke="#9C27B0" stroke-width="1" rx="4"/>
+    <text x="350" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold">ML Model 2</text>
+    <text x="350" y="413" text-anchor="middle" font-family="Arial, sans-serif" font-size="8">Garage Ranking</text>
+    <text x="350" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="8">(Queue, Rating, etc.)</text>
+    
+    <text x="70" y="455" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Output:</text>
+    <text x="70" y="470" font-family="Arial, sans-serif" font-size="10">• Ranked list of recommended garages</text>
+    <text x="70" y="485" font-family="Arial, sans-serif" font-size="10">• Distance, waiting time, ratings, employees</text>
+    
+    <!-- Required interface -->
+    <circle cx="40" cy="400" r="4" fill="white" stroke="#FF5722" stroke-width="2"/>
+    <path d="M37,400 L43,400 M40,397 L40,403" stroke="#FF5722" stroke-width="1"/>
+    
+    <!-- Provided interface -->
+    <circle cx="460" cy="410" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="470" y="415" font-family="Arial, sans-serif" font-size="9">IGarageList</text>
+  </g>
+  
+  <!-- Mechanic & Tow Dispatch System -->
+  <g id="mechanicSystem">
+    <rect x="1100" y="320" width="300" height="150" fill="url(#componentGradient)" stroke="#2196F3" stroke-width="2" rx="8"/>
+    <rect x="1130" y="310" width="120" height="15" fill="white" stroke="#2196F3" stroke-width="1"/>
+    <rect x="1130" y="330" width="90" height="10" fill="white" stroke="#2196F3" stroke-width="1"/>
+    
+    <text x="1250" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Mechanic &amp; Tow Dispatch</text>
+    
+    <text x="1120" y="375" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Services:</text>
+    <text x="1120" y="390" font-family="Arial, sans-serif" font-size="10">• Mechanic Finder (location, ETA)</text>
+    <text x="1120" y="405" font-family="Arial, sans-serif" font-size="10">• Tow Truck Dispatch (location, ETA)</text>
+    <text x="1120" y="420" font-family="Arial, sans-serif" font-size="10">• Live Tracking</text>
+    <text x="1120" y="435" font-family="Arial, sans-serif" font-size="10">• Real-time location updates</text>
+    <text x="1120" y="450" font-family="Arial, sans-serif" font-size="10">• Availability management</text>
+    
+    <!-- Required interface -->
+    <circle cx="1090" cy="395" r="4" fill="white" stroke="#FF5722" stroke-width="2"/>
+    <path d="M1087,395 L1093,395 M1090,392 L1090,398" stroke="#FF5722" stroke-width="1"/>
+    
+    <!-- Provided interface -->
+    <circle cx="1410" cy="395" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="1420" y="400" font-family="Arial, sans-serif" font-size="9">IMechanicDispatch</text>
+  </g>
+  
+  <!-- Booking & Notification Module -->
+  <g id="bookingModule">
+    <rect x="550" y="580" width="350" height="120" fill="url(#componentGradient)" stroke="#2196F3" stroke-width="2" rx="8"/>
+    <rect x="580" y="570" width="120" height="15" fill="white" stroke="#2196F3" stroke-width="1"/>
+    <rect x="580" y="590" width="90" height="10" fill="white" stroke="#2196F3" stroke-width="1"/>
+    
+    <text x="725" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Booking &amp; Notification Module</text>
+    
+    <text x="570" y="635" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Services:</text>
+    <text x="570" y="650" font-family="Arial, sans-serif" font-size="10">• Garage booking confirmation</text>
+    <text x="570" y="665" font-family="Arial, sans-serif" font-size="10">• Mechanic/Tow booking confirmation</text>
+    <text x="570" y="680" font-family="Arial, sans-serif" font-size="10">• Push notifications &amp; SMS alerts</text>
+    
+    <!-- Required interfaces -->
+    <circle cx="540" cy="620" r="4" fill="white" stroke="#FF5722" stroke-width="2"/>
+    <path d="M537,620 L543,620 M540,617 L540,623" stroke="#FF5722" stroke-width="1"/>
+    
+    <circle cx="540" cy="660" r="4" fill="white" stroke="#FF5722" stroke-width="2"/>
+    <path d="M537,660 L543,660 M540,657 L540,663" stroke="#FF5722" stroke-width="1"/>
+    
+    <!-- Provided interface -->
+    <circle cx="910" cy="640" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="920" y="645" font-family="Arial, sans-serif" font-size="9">INotification</text>
+  </g>
+  
+  <!-- Garage Portal -->
+  <g id="garagePortal">
+    <rect x="1050" y="580" width="280" height="120" fill="url(#componentGradient)" stroke="#2196F3" stroke-width="2" rx="8"/>
+    <rect x="1080" y="570" width="80" height="15" fill="white" stroke="#2196F3" stroke-width="1"/>
+    <rect x="1080" y="590" width="60" height="10" fill="white" stroke="#2196F3" stroke-width="1"/>
+    
+    <text x="1190" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Garage Portal</text>
+    
+    <text x="1070" y="635" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Features:</text>
+    <text x="1070" y="650" font-family="Arial, sans-serif" font-size="10">• Job Queue &amp; Employee Availability Update</text>
+    <text x="1070" y="665" font-family="Arial, sans-serif" font-size="10">• Repair Progress Update</text>
+    <text x="1070" y="680" font-family="Arial, sans-serif" font-size="10">• Status: Pending → In Progress → Completed</text>
+    
+    <!-- Provided interface -->
+    <circle cx="1340" cy="640" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="1350" y="645" font-family="Arial, sans-serif" font-size="9">IProgressUpdate</text>
+  </g>
+  
+  <!-- Feedback & Data Store -->
+  <g id="feedbackStore">
+    <rect x="250" y="760" width="300" height="120" fill="url(#componentGradient)" stroke="#2196F3" stroke-width="2" rx="8"/>
+    <rect x="280" y="750" width="100" height="15" fill="white" stroke="#2196F3" stroke-width="1"/>
+    <rect x="280" y="770" width="80" height="10" fill="white" stroke="#2196F3" stroke-width="1"/>
+    
+    <text x="400" y="790" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Feedback &amp; Data Store</text>
+    
+    <text x="270" y="815" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Collects:</text>
+    <text x="270" y="830" font-family="Arial, sans-serif" font-size="10">• User ratings &amp; feedback</text>
+    <text x="270" y="845" font-family="Arial, sans-serif" font-size="10">• Actual repair/waiting times</text>
+    <text x="270" y="860" font-family="Arial, sans-serif" font-size="10">• Data retraining pipeline</text>
+    
+    <!-- Required interface -->
+    <circle cx="240" cy="820" r="4" fill="white" stroke="#FF5722" stroke-width="2"/>
+    <path d="M237,820 L243,820 M240,817 L240,823" stroke="#FF5722" stroke-width="1"/>
+    
+    <!-- Provided interface -->
+    <circle cx="560" cy="820" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="570" y="825" font-family="Arial, sans-serif" font-size="9">IDataCollection</text>
+  </g>
+  
+  <!-- Database -->
+  <g id="database">
+    <rect x="650" y="760" width="250" height="140" fill="url(#componentGradient)" stroke="#2196F3" stroke-width="2" rx="8"/>
+    <rect x="680" y="750" width="60" height="15" fill="white" stroke="#2196F3" stroke-width="1"/>
+    <rect x="680" y="770" width="50" height="10" fill="white" stroke="#2196F3" stroke-width="1"/>
+    
+    <text x="775" y="790" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Database</text>
+    
+    <text x="670" y="815" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Stores:</text>
+    <text x="670" y="830" font-family="Arial, sans-serif" font-size="10">• Repair history &amp; patterns</text>
+    <text x="670" y="845" font-family="Arial, sans-serif" font-size="10">• Garage details &amp; availability</text>
+    <text x="670" y="860" font-family="Arial, sans-serif" font-size="10">• Mechanic/tow truck details</text>
+    <text x="670" y="875" font-family="Arial, sans-serif" font-size="10">• User feedback &amp; ratings data</text>
+    <text x="670" y="890" font-family="Arial, sans-serif" font-size="10">• ML training datasets</text>
+    
+    <!-- Required interface -->
+    <circle cx="640" cy="820" r="4" fill="white" stroke="#FF5722" stroke-width="2"/>
+    <path d="M637,820 L643,820 M640,817 L640,823" stroke="#FF5722" stroke-width="1"/>
+    
+    <!-- Provided interface -->
+    <circle cx="910" cy="830" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="920" y="835" font-family="Arial, sans-serif" font-size="9">IDataAccess</text>
+  </g>
+  
+  <!-- ML Retraining Component -->
+  <g id="mlRetraining">
+    <rect x="1000" y="760" width="280" height="140" fill="url(#componentGradient)" stroke="#2196F3" stroke-width="2" rx="8"/>
+    <rect x="1030" y="750" width="100" height="15" fill="white" stroke="#2196F3" stroke-width="1"/>
+    <rect x="1030" y="770" width="80" height="10" fill="white" stroke="#2196F3" stroke-width="1"/>
+    
+    <text x="1140" y="790" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold">ML Retraining Component</text>
+    
+    <text x="1020" y="815" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Functions:</text>
+    <text x="1020" y="830" font-family="Arial, sans-serif" font-size="10">• Analyzes actual vs predicted times</text>
+    <text x="1020" y="845" font-family="Arial, sans-serif" font-size="10">• Processes user ratings &amp; queue data</text>
+    <text x="1020" y="860" font-family="Arial, sans-serif" font-size="10">• Updates ML Model 1 &amp; ML Model 2</text>
+    <text x="1020" y="875" font-family="Arial, sans-serif" font-size="10">• Continuous learning pipeline</text>
+    <text x="1020" y="890" font-family="Arial, sans-serif" font-size="10">• Performance optimization</text>
+    
+    <!-- Required interface -->
+    <circle cx="990" cy="830" r="4" fill="white" stroke="#FF5722" stroke-width="2"/>
+    <path d="M987,830 L993,830 M990,827 L990,833" stroke="#FF5722" stroke-width="1"/>
+    
+    <!-- Provided interface -->
+    <circle cx="1290" cy="830" r="4" fill="white" stroke="#2196F3" stroke-width="2"/>
+    <text x="1300" y="835" font-family="Arial, sans-serif" font-size="9">IModelUpdate</text>
+  </g>
+  
+  <!-- Connection lines with interfaces -->
+  
+  <!-- Mobile App to Chatbot -->
+  <line x1="344" y1="140" x2="436" y2="140" stroke="#2196F3" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- Chatbot to Decision Module -->
+  <line x1="714" y1="155" x2="786" y2="155" stroke="#2196F3" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- Decision to Garage System -->
+  <line x1="1010" y1="130" x2="1010" y2="300" stroke="#4CAF50" stroke-width="3"/>
+  <line x1="1010" y1="300" x2="250" y2="300" stroke="#4CAF50" stroke-width="3"/>
+  <line x1="250" y1="300" x2="40" y2="300" stroke="#4CAF50" stroke-width="3"/>
+  <line x1="40" y1="300" x2="40" y2="396" stroke="#4CAF50" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="500" y="295" font-family="Arial, sans-serif" font-size="10" fill="#4CAF50" font-weight="bold">Drivable Route</text>
+  
+  <!-- Decision to Mechanic System -->
+  <line x1="1014" y1="170" x2="1086" y2="170" stroke="#F44336" stroke-width="3"/>
+  <line x1="1086" y1="170" x2="1086" y2="391" stroke="#F44336" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="1020" y="165" font-family="Arial, sans-serif" font-size="10" fill="#F44336" font-weight="bold">Not Drivable Route</text>
+  
+  <!-- Garage System to Booking -->
+  <line x1="464" y1="410" x2="536" y2="410" stroke="#2196F3" stroke-width="2"/>
+  <line x1="536" y1="410" x2="536" y2="616" stroke="#2196F3" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- Mechanic System to Booking -->
+  <line x1="1414" y1="395" x2="1450" y2="395" stroke="#2196F3" stroke-width="2"/>
+  <line x1="1450" y1="395" x2="1450" y2="560" stroke="#2196F3" stroke-width="2"/>
+  <line x1="1450" y1="560" x2="536" y2="560" stroke="#2196F3" stroke-width="2"/>
+  <line x1="536" y1="560" x2="536" y2="656" stroke="#2196F3" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- Booking to Mobile App (notifications) -->
+  <line x1="914" y1="640" x2="950" y2="640" stroke="#2196F3" stroke-width="2"/>
+  <line x1="950" y1="640" x2="950" y2="300" stroke="#2196F3" stroke-width="2"/>
+  <line x1="950" y1="300" x2="344" y2="300" stroke="#2196F3" stroke-width="2"/>
+  <line x1="344" y1="300" x2="344" y2="216" stroke="#2196F3" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- Garage Portal to Mobile App (progress updates) -->
+  <line x1="1344" y1="640" x2="1400" y2="640" stroke="#2196F3" stroke-width="2"/>
+  <line x1="1400" y1="640" x2="1400" y2="50" stroke="#2196F3" stroke-width="2"/>
+  <line x1="1400" y1="50" x2="190" y2="50" stroke="#2196F3" stroke-width="2"/>
+  <line x1="190" y1="50" x2="190" y2="80" stroke="#2196F3" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="700" y="45" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2196F3" font-weight="bold">Progress Updates</text>
+  
+  <!-- Mobile App to Feedback Store -->
+  <line x1="344" y1="180" x2="380" y2="180" stroke="#2196F3" stroke-width="2"/>
+  <line x1="380" y1="180" x2="380" y2="740" stroke="#2196F3" stroke-width="2"/>
+  <line x1="380" y1="740" x2="236" y2="740" stroke="#2196F3" stroke-width="2"/>
+  <line x1="236" y1="740" x2="236" y2="816" stroke="#2196F3" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- Feedback Store to Database -->
+  <line x1="564" y1="820" x2="636" y2="820" stroke="#2196F3" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- Database to ML Retraining -->
+  <line x1="914" y1="830" x2="986" y2="830" stroke="#2196F3" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- ML Retraining back to Garage System (model updates) -->
+  <line x1="1294" y1="830" x2="1320" y2="830" stroke="#FF9800" stroke-width="3" stroke-dasharray="5,5"/>
+  <line x1="1320" y1="830" x2="1320" y2="950" stroke="#FF9800" stroke-width="3" stroke-dasharray="5,5"/>
+  <line x1="1320" y1="950" x2="240" y2="950" stroke="#FF9800" stroke-width="3" stroke-dasharray="5,5"/>
+  <line x1="240" y1="950" x2="240" y2="435" stroke="#FF9800" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+  <text x="700" y="965" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#FF9800" font-weight="bold">ML Model Updates &amp; Retraining Loop</text>
+  
+  <!-- Additional interface labels for clarity -->
+  <text x="400" y="135" font-family="Arial, sans-serif" font-size="9" fill="#666">processes user input</text>
+  <text x="750" y="150" font-family="Arial, sans-serif" font-size="9" fill="#666">fault analysis</text>
+  <text x="500" y="625" font-family="Arial, sans-serif" font-size="9" fill="#666">booking requests</text>
+  <text x="600" y="815" font-family="Arial, sans-serif" font-size="9" fill="#666">stores data</text>
+  <text x="950" y="825" font-family="Arial, sans-serif" font-size="9" fill="#666">training data</text>
+  
+  <!-- Interface connection indicators -->
+  <text x="370" y="160" font-family="Arial, sans-serif" font-size="8" fill="#999">«uses»</text>
+  <text x="750" y="170" font-family="Arial, sans-serif" font-size="8" fill="#999">«provides»</text>
+  <text x="520" y="540" font-family="Arial, sans-serif" font-size="8" fill="#999">«requests»</text>
+  <text x="580" y="835" font-family="Arial, sans-serif" font-size="8" fill="#999">«persists»</text>
+  <text x="950" y="845" font-family="Arial, sans-serif" font-size="8" fill="#999">«analyzes»</text>
