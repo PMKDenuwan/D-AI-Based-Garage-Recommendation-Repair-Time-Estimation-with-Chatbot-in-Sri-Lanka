@@ -1,0 +1,168 @@
+AI-Based Garage Recommendation and Repair Time Estimation System with Chatbot
+1. Problem Background
+
+Vehicle breakdowns often create stress and confusion, especially for non-technical drivers who may not know whether it is safe to continue driving or what kind of repair is required. In Sri Lanka, current apps such as MyMech and AA Ceylon Breakdown Service mainly act as contact directories. They do not explain faults, predict repair times, or provide ranked garage recommendations. As a result, drivers face delays, risk unsafe decisions, and can even be overcharged due to lack of transparency.
+
+2. Proposed Solution: Knowledge-Based AI Chatbot
+
+Our project introduces an AI-powered Garage Recommendation and Repair Time Estimation System where the chatbot acts as the core intelligence. Unlike simple bots that only capture phrases, this system:
+
+Collects multiple user inputs (speed, time, dashboard photos, noises, smoke).
+
+Uses a knowledge base of car faults, categories, and solutions at multiple stages.
+
+Explains the likely fault clearly in friendly language.
+
+Estimates repair time (average vs. high-risk cases).
+
+Decides whether the car is drivable, needs a mechanic, or requires a tow.
+
+The chatbot functions as a knowledge assistant, behaving like a supportive friend who guides drivers step by step, even if they lack technical knowledge.
+
+3. Process Flow
+
+Step 1: Friendly Fault Reporting
+Driver reports: “My battery light turned on and the car stopped.”
+Chatbot responds with guided questions:
+
+“At what speed did this happen?”
+
+“How long before the car stopped?”
+
+“Can you share a photo of your dashboard?”
+
+“Did you notice smoke or unusual noises?”
+
+Step 2: Knowledge Base Matching
+Example: Toyota Passo 2006 → Alternator issue.
+
+Minor fault: Loose belt → ~2 hrs repair.
+
+Major fault: Alternator replacement → ~5 hrs repair.
+
+Step 3: Drivability Decision
+
+Minor issue → Car may be drivable for short distance.
+
+Major issue → Not drivable → mechanic dispatch or tow.
+
+Step 4: Repair Time Prediction (ML Model 1)
+System predicts repair duration using car model, fault type, required parts, and historical data.
+Example: “Toyota Passo alternator failure → Avg: 3 hrs | High-risk: 5 hrs.”
+
+Step 5: Garage Recommendation (ML Model 2)
+For drivable vehicles, the system suggests five garages ranked by:
+
+Distance & travel ETA
+
+Queue waiting time
+
+Number of employees available
+
+Predicted repair duration
+
+Historical user ratings
+
+Step 6: Booking Module
+Driver selects a garage → booking is confirmed → garage notified instantly.
+
+Step 7: Progress Tracking Module
+Garages update job status: Pending → In Progress → Completed. Drivers see live updates via the app.
+
+Step 8: Feedback & Data Collection
+Users rate garages and mechanics after service. Real-world repair times and outcomes are logged into the database. Machine learning models retrain continuously, improving prediction accuracy over time.
+
+4. Impact
+
+Drivers: Get fault explanations, safe driving guidance, repair time predictions, and transparent garage choices.
+
+Garages: Receive informed customers and optimized job scheduling.
+
+Mechanics: Get dispatched efficiently with the right preparation.
+====================================================================================
+
+Friendly Real-World Demo
+
+👩‍🦰 Driver: Nadeesha, a new driver in Colombo.
+
+🚗 Problem: While driving, the battery warning light turns on. After a short distance, the car stalls and won’t restart.
+
+📱 Chatbot Conversation:
+
+Nadeesha: “My car suddenly stopped after the battery light came on.”
+
+Chatbot: “Okay, don’t worry, I’ll help you figure this out. At what speed did the light appear?”
+
+Nadeesha: “Around 40 km/h.”
+
+Chatbot: “How long did you drive before the car stopped?”
+
+Nadeesha: “Maybe two minutes.”
+
+Chatbot: “Can you share a photo of your dashboard lights?”
+
+Nadeesha uploads photo.
+
+Chatbot: “Thanks. Did you hear any strange noise or see smoke?”
+
+Nadeesha: “No smoke, no noise.”
+
+📊 System Analysis:
+
+Likely fault: Alternator issue.
+
+Repair time estimates:
+
+Minor case → ~2 hrs.
+
+Major case → ~5 hrs.
+
+Decision: Car is not drivable.
+
+🛠️ System Recommendation:
+Instead of showing just one garage, the system provides a ranked list of 5 garages based on:
+
+Distance from user
+
+Travel time (Google Maps API)
+
+Current waiting time (queue)
+
+Predicted repair duration (ML model)
+
+Number of available mechanics
+
+User ratings & past performance
+
+📱 Output Example:
+
+Garage A – 2.5 km, ETA 10 min, 1 hr wait, 2 mechanics, 4.3★ rating
+
+Garage B – 3.2 km, ETA 12 min, no wait, 3 mechanics, 4.0★ rating
+
+Garage C – 4.0 km, ETA 15 min, 2 hr wait, 5 mechanics, 4.6★ rating
+
+Garage D – 5.1 km, ETA 20 min, no wait, 4 mechanics, 4.2★ rating
+
+Garage E – 6.0 km, ETA 25 min, 3 hr wait, 6 mechanics, 4.5★ rating
+
+Nadeesha chooses Garage C for high ratings despite longer wait.
+Mechanic dispatched to assist → Car safely towed.
+Progress tracked → Pending → In Progress → Completed.
+
+🔹 Alternator Fault Breakdown (Battery Warning Light)
+Possible Reason	Explanation	Solution	Estimated Repair Time
+Loose or worn alternator belt	Belt slips or breaks, alternator can’t charge battery	Replace or tighten belt	1.5–2 hrs
+Alternator bearing failure	Bearings wear out → alternator seizes or fails	Replace alternator assembly	4–5 hrs
+Worn-out alternator brushes	Brushes inside alternator wear → poor charging	Replace brushes (if serviceable) or alternator	2–3 hrs
+Faulty voltage regulator	Regulator fails → battery not charged or overcharged	Replace regulator (internal/external)	2–3 hrs
+Loose/corroded wiring or terminals	Poor electrical connection stops charging	Clean or replace wiring/terminals	1–2 hrs
+Completely failed alternator	Alternator dead → no power to recharge battery	Replace alternator	4–5 hrs
+🔹 Key Point for Proposal
+
+Novelty: The chatbot acts as a knowledge base, not only recognizing symptoms but mapping them to specific faults, their causes, and multiple repair pathways with repair times.
+
+Garage recommendations are not static but ranked intelligently across at least 5 options, ensuring drivers have choice + transparency.
+
+Benefit: Drivers walk into a garage already knowing the likely issue and repair time → prevents garages from overcharging or misleading them.
+
