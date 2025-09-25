@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Garage Assistant - Sri Lanka</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #2ed573;
+            --warning: #ff6b6b;
+            --success: #26d0ce;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --shadow: 0 15px 35px rgba(0,0,0,0.1);
+            --shadow-hover: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .hero-header {
+            text-align: center;
+            padding: 40px 0;
+            color: white;
+        }
+
+        .hero-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #fff, #e1e8ed);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Main Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            flex: 1;
+            margin-bottom: 30px;
+        }
+
+        /* Chat Section */
+        .chat-panel {
+            background: white;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--warning), #ee5a24);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .chat-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .chat-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            max-height: 500px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            animation: messageSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 75%;
+            padding: 16px 22px;
+            border-radius: 20px;
+            font-size: 15px;
+            line-height: 1.5;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-bottom-right-radius: 8px;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: var(--dark);
+            border-bottom-left-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .chat-input-area {
+            padding: 25px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Service Panel */
+        .service-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Mechanic Dispatch Card */
+        .dispatch-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-left: 5px solid var(--warning);
+            display: none;
+        }
+
+        .dispatch-card.show {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .dispatch-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .dispatch-card h3 {
+            color: var(--warning);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .dispatch-info {
+            background: #fff5f5;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 1px solid #fecaca;
+        }
+
+        .eta-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #fef3e2, #fde68a);
+            border-radius: 10px;
+        }
+
+        /* Garage Recommendations */
+        .recommendations-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .recommendations-header {
+            background: linear-gradient(135deg, var(--accent), #1e90ff);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .recommendations-header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid var(--accent);
+        }
+
+        .garage-list {
+            padding: 25px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .garage-item {
+            background: #f8f9fa;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .garage-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .garage-item:hover::before {
+            left: 100%;
+        }
+
+        .garage-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .garage-item.selected {
+            background: linear-gradient(135deg, var(--accent), #20bf6b);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .garage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .garage-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .garage-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,193,7,0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 1.1rem;
+        }
+
+        .garage-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .garage-item.selected .detail-item {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Map Integration */
+        .map-container {
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Diagnosis Results */
+        .diagnosis-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .diagnosis-panel.show {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .diagnosis-header {
+            background: linear-gradient(135deg, #a8e6cf, #26d0ce);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .diagnosis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .diagnosis-item {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 18px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.2s;
+        }
+
+        .diagnosis-item:hover {
+            transform: translateX(5px);
+        }
+
+        .diagnosis-item strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Progress Tracker */
+        .progress-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .progress-header h3 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .progress-track {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            z-index: 1;
+        }
+
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            border-radius: 2px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+
+        .progress-step {
+            background: white;
+            border: 4px solid #e9ecef;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            z-index: 3;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(46, 213, 115, 0.2);
+        }
+
+        .progress-step.completed {
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+
+        .progress-labels span {
+            text-align: center;
+            max-width: 80px;
+        }
+
+        /* Demo Controls */
+        .demo-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background: linear-gradient(135deg, var(--warning), #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+        }
+
+        .demo-btn.secondary {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        .demo-btn.secondary:hover {
+            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.6);
+        }
+
+        /* Animations */
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .hero-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .diagnosis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                padding: 15px;
+            }
+            
+            .hero-header {
+                padding: 20px 0;
+            }
+            
+            .hero-header h1 {
+                font-size: 2rem;
+            }
+            
+            .garage-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .progress-labels span {
+                font-size: 12px;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Hero Header -->
+        <div class="hero-header">
+            <h1>🚗 AI Garage Assistant</h1>
+            <p>Smart vehicle diagnostics with mechanic dispatch and garage recommendations across Sri Lanka</p>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="main-grid">
+            <!-- Chat Panel -->
+            <div class="chat-panel">
+                <div class="chat-header">
+                    <h3>🤖 AI Diagnostic Assistant</h3>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot">
+                        <div class="message-content">
+                            Hi! I'm your AI garage assistant. I'll help diagnose your vehicle issue and arrange the best solution. What seems to be wrong with your vehicle today?
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <div class="input-group">
+                        <input type="text" class="chat-input" id="messageInput" placeholder="Describe your vehicle problem in detail..." />
+                        <button class="send-button" onclick="sendMessage()">
+                            <span>➤</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Panel -->
+            <div class="service-panel">
+                <!-- Mechanic Dispatch Card -->
+                <div class="dispatch-card" id="mechanicDispatch">
+                    <div class="dispatch-icon">🚨</div>
+                    <h3>Emergency Mechanic Dispatch</h3>
+                    <p>Your vehicle is not safe to drive. We're dispatching a mechanic to your location.</p>
+                    
+                    <div class="dispatch-info">
+                        <strong>Pickup Service Arranged</strong>
+                        <p>A qualified mechanic will come to your location to assess and tow your vehicle if needed.</p>
+                    </div>
+
+                    <div class="eta-info">
+                        <div>
+                            <strong>⏰ ETA: 15-20 minutes</strong>
+                        </div>
+                        <div>
+                            <strong>📱 Contact: +94 11 234 5678</strong>
+                        </div>
+                    </div>
+
+                    <div class="map-container">
+                        <div id="mechanicMap" style="height: 100%; background: #e9ecef; display: flex; align-items: center; justify-content: center; color: #666;">
+                            📍 Mechanic Location Tracking
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Garage Recommendations -->
+                <div class="recommendations-card">
+                    <div class="recommendations-header">
+                        <h3>🏪 Recommended Garages</h3>
+                    </div>
+                    <div class="garage-list" id="garageList">
+                        <p style="text-align: center; color: #666; padding: 60px 20px;">
+                            Complete the diagnostic chat to see personalized garage recommendations
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diagnosis Results -->
+        <div class="diagnosis-panel" id="diagnosisResults">
+            <div class="diagnosis-header">
+                <h3>🔧 Vehicle Diagnosis Results</h3>
+                <p>Based on your symptoms, here's what we found</p>
+            </div>
+            <div class="diagnosis-grid" id="diagnosisDetails">
+                <!-- Diagnosis details will be populated here -->
+            </div>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <h3>📋 Service Progress Tracker</h3>
+                <p>Track your vehicle's service progress in real-time</p>
+            </div>
+            <div class="progress-track">
+                <div class="progress-line">
+                    <div class="progress-fill" id="progressFill" style="width: 20%"></div>
+                </div>
+                <div class="progress-step completed" id="step1">1</div>
+                <div class="progress-step" id="step2">2</div>
+                <div class="progress-step" id="step3">3</div>
+                <div class="progress-step" id="step4">4</div>
+                <div class="progress-step" id="step5">5</div>
+            </div>
+            <div class="progress-labels">
+                <span>Problem Reported</span>
+                <span>Diagnosed</span>
+                <span>Service Arranged</span>
+                <span>In Progress</span>
+                <span>Completed</span>
+            </div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="demo-section">
+            <div class="demo-buttons">
+                <button class="demo-btn" onclick="startBatteryDemo()">🔋 Demo: Battery Dead (Not Drivable)</button>
+                <button class="demo-btn" onclick="startEngineDemo()">⚙️ Demo: Engine Issue (Drivable)</button>
+                <button class="demo-btn secondary" onclick="resetSystem()">🔄 Reset System</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // System State
+        let currentStep = 1;
+        let chatStep = 0;
+        let selectedGarage = null;
+        let faultData = {};
+        let isDrivable = true;
+
+        // Enhanced fault knowledge base
+        const faultDatabase = {
+            battery: {
+                symptoms: ["battery light", "car stopped", "won't start", "dim lights", "dead battery"],
+                causes: [
+                    { reason: "Complete battery failure", solution: "Replace battery and check charging system", time: "2-3 hrs", severity: "high" },
+                    { reason: "Alternator failure", solution: "Replace alternator assembly", time: "4-6 hrs", severity: "high" },
+                    { reason: "Loose alternator belt", solution: "Replace or tighten belt", time: "1-2 hrs", severity: "medium" },
+                    { reason: "Corroded terminals", solution: "Clean terminals and connections", time: "30-60 min", severity: "low" }
+                ],
+                drivable: false,
+                category: "Electrical",
+                urgency: "high"
+            },
+            engine: {
+                symptoms: ["engine noise", "rough idle", "smoke", "overheating", "strange sounds"],
+                causes: [
+                    { reason: "Dirty air filter", solution: "Replace air filter", time: "30 min", severity: "low" },
+                    { reason: "Faulty spark plugs", solution: "Replace spark plugs", time: "1-2 hrs", severity: "medium" },
+                    { reason: "Oil leak", solution: "Fix oil leak and refill", time: "2-4 hrs", severity: "medium" },
+                    { reason: "Cooling system failure", solution: "Repair cooling system", time: "3-5 hrs", severity: "high" }
+                ],
+                drivable: true,
+                category: "Engine",
+                urgency: "medium"
+            },
+            brakes: {
+                symptoms: ["squealing", "grinding", "soft pedal", "brake warning"],
+                causes: [
+                    { reason: "Worn brake pads", solution: "Replace brake pads", time: "2-3 hrs", severity: "high" },
+                    { reason: "Low brake fluid", solution: "Refill brake fluid and check for leaks", time: "30 min", severity: "medium" },
+                    { reason: "Warped rotors", solution: "Replace or resurface rotors", time: "3-4 hrs", severity: "high" }
+                ],
+                drivable: false,
+                category: "Safety",
+                urgency: "critical"
+            }
+        };
+
+        // Sample garage data for Sri Lanka with more realistic locations
+        const sriLankanGarages = [
+            {
+                name: "AutoCare Colombo",
+                distance: "2.1 km",
+                eta: "8 min",
+                waitTime: "45 min",
+                mechanics: 4,
+                rating: 4.5,
+                location: "Colombo 03",
+                specialties: ["Electrical", "Engine"],
+                lat: 6.9271,
+                lng: 79.8612
+            },
+            {
+                name: "Swift Motors Kandy",
+                distance: "3.8 km", 
+                eta: "12 min",
+                waitTime: "1.5 hrs",
+                mechanics: 3,
+                rating: 4.2,
+                location: "Kandy Road",
+                specialties: ["Engine", "Transmission"],
+                lat: 7.2906,
+                lng: 80.6337
+            },
+            {
+                name: "Premium Auto Galle",
+                distance: "1.9 km",
+                eta: "6 min",
+                waitTime: "30 min",
+                mechanics: 5,
+                rating: 4.7,
+                location: "Galle Road, Dehiwala",
+                specialties: ["Electrical", "AC", "Engine"],
+                lat: 6.8485,
+                lng: 79.8751
+            },
+            {
+                name: "Quick Fix Negombo",
+                distance: "4.2 km",
+                eta: "15 min",
+                waitTime: "2 hrs",
+                mechanics: 2,
+                rating: 4.0,
+                location: "Negombo Main Street",
+                specialties: ["General", "Electrical"],
+                lat: 7.2083,
+                lng: 79.8358
+            },
+            {
+                name: "Expert Auto Matara",
+                distance: "2.8 km",
+                eta: "10 min", 
+                waitTime: "1 hr",
+                mechanics: 6,
+                rating: 4.4,
+                location: "Matara Junction",
+                specialties: ["Engine", "Brakes", "Electrical"],
+                lat: 5.9549,
+                lng: 80.5550
+            }
+        ];
+
+        // Chat functionality
+        function addMessage(content, isUser = false) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            messageDiv.innerHTML = `<div class="message-content">${content}</div>`;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            addMessage(message, true);
+            input.value = '';
+            
+            setTimeout(() => processUserInput(message), 1000);
+        }
+
+        function processUserInput(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (chatStep === 0) {
+                // Initial problem identification
+                if (lowerMessage.includes('battery') || lowerMessage.includes('dead') || lowerMessage.includes('won\'t start')) {
+                    faultData.type = 'battery';
+                    addMessage("I understand you're having battery issues. This sounds serious and potentially unsafe to drive. Let me gather more details. At what speed were you driving when this happened?");
+                    chatStep = 1;
+                } else if (lowerMessage.includes('engine') || lowerMessage.includes('noise') || lowerMessage.includes('smoke') || lowerMessage.includes('rough')) {
+                    faultData.type = 'engine';
+                    addMessage("I see you're experiencing engine problems. Can you describe the specific noise or smoke you noticed? Also, at what speed did this occur?");
+                    chatStep = 1;
+                } else if (lowerMessage.includes('brake') || lowerMessage.includes('squealing') || lowerMessage.includes('grinding') || lowerMessage.includes('soft pedal')) {
+                    faultData.type = 'brakes';
+                    addMessage("⚠️ Brake issues are a serious safety concern! Please stop driving immediately. Can you describe the exact brake problem - is it squealing, grinding, or a soft pedal?");
+                    chatStep = 1;
+                } else {
+                    addMessage("I'll help you diagnose this issue. Can you provide more specific details about the symptoms? For example: warning lights, unusual sounds, performance issues, or any smoke/smells?");
+                }
+            } else if (chatStep === 1) {
+                faultData.speed = message;
+                addMessage("Thank you. How long did you drive before the problem became severe or the car stopped working?");
+                chatStep = 2;
+            } else if (chatStep === 2) {
+                faultData.duration = message;
+                addMessage("Got it. Did you notice any warning lights on your dashboard, unusual smells, or any other symptoms?");
+                chatStep = 3;
+            } else if (chatStep === 3) {
+                faultData.additionalSymptoms = message;
+                addMessage("Perfect! Let me analyze all this information and provide you with a diagnosis. Please wait a moment... <div class='loading'></div>");
+                
+                setTimeout(() => performDiagnosis(), 2500);
+            }
+        }
+
+        function performDiagnosis() {
+            const fault = faultDatabase[faultData.type];
+            if (!fault) return;
+
+            isDrivable = fault.drivable;
+            const mainCause = fault.causes[0];
+
+            // Show diagnosis results
+            displayDiagnosisResults(fault, mainCause);
+
+            if (!isDrivable) {
+                // Show mechanic dispatch for non-drivable vehicles
+                showMechanicDispatch();
+                addMessage(`🚨 **SAFETY ALERT**: Your vehicle is not safe to drive!\n\n**Diagnosed Issue**: ${mainCause.reason}\n**Solution**: ${mainCause.solution}\n**Estimated Time**: ${mainCause.time}\n\nI've arranged for a mechanic to come to your location. They will assess the situation and tow your vehicle to a suitable garage if needed.`);
+            } else {
+                // Show garage recommendations for drivable vehicles  
+                addMessage(`**Diagnosis Complete**: ${mainCause.reason}\n**Solution**: ${mainCause.solution}\n**Estimated Time**: ${mainCause.time}\n\n✅ Your vehicle appears to be drivable for short distances. I'm showing you the best garages nearby. Please drive carefully and avoid high speeds.`);
+            }
+
+            displayGarageRecommendations();
+            updateProgress(2);
+
+            // After showing recommendations, allow garage selection
+            setTimeout(() => {
+                if (!isDrivable) {
+                    addMessage("After the mechanic pickup, please select which garage you'd prefer for the repairs:");
+                } else {
+                    addMessage("Please select your preferred garage from the recommendations above:");
+                }
+            }, 2000);
+        }
+
+        function displayDiagnosisResults(fault, mainCause) {
+            const diagnosisPanel = document.getElementById('diagnosisResults');
+            const diagnosisDetails = document.getElementById('diagnosisDetails');
+            
+            diagnosisPanel.classList.add('show');
+            
+            diagnosisDetails.innerHTML = `
+                <div class="diagnosis-item">
+                    <strong>Primary Issue</strong>
+                    ${mainCause.reason}
+                </div>
+                <div class="diagnosis-item">
+                    <strong>Recommended Solution</strong>
+                    ${mainCause.solution}
+                </div>
+                <div class="diagnosis-item">
+                    <strong>Estimated Repair Time</strong>
+                    ${mainCause.time}
+                </div>
+                <div class="diagnosis-item">
+                    <strong>Severity Level</strong>
+                    ${mainCause.severity.toUpperCase()}
+                </div>
+                <div class="diagnosis-item">
+                    <strong>Vehicle Status</strong>
+                    ${fault.drivable ? "✅ Drivable (with caution)" : "🚨 NOT DRIVABLE"}
+                </div>
+                <div class="diagnosis-item">
+                    <strong>Category</strong>
+                    ${fault.category}
+                </div>
+            `;
+        }
+
+        function showMechanicDispatch() {
+            const dispatchCard = document.getElementById('mechanicDispatch');
+            dispatchCard.classList.add('show');
+            dispatchCard.classList.add('pulse');
+
+            // Simulate mechanic dispatch progress
+            setTimeout(() => {
+                const etaInfo = dispatchCard.querySelector('.eta-info');
+                etaInfo.innerHTML = `
+                    <div>
+                        <strong>🚗 Mechanic Dispatched!</strong><br>
+                        <small>ETA: 12 minutes</small>
+                    </div>
+                    <div>
+                        <strong>📱 Direct Contact</strong><br>
+                        <small>+94 77 123 4567</small>
+                    </div>
+                `;
+                dispatchCard.classList.remove('pulse');
+            }, 3000);
+        }
+
+        function displayGarageRecommendations() {
+            const garageList = document.getElementById('garageList');
+            
+            // Sort garages by rating and wait time for better recommendations
+            const sortedGarages = [...sriLankanGarages].sort((a, b) => {
+                const aScore = a.rating * 2 - (parseFloat(a.waitTime) || 0);
+                const bScore = b.rating * 2 - (parseFloat(b.waitTime) || 0);
+                return bScore - aScore;
+            });
+
+            garageList.innerHTML = sortedGarages.map((garage, index) => `
+                <div class="garage-item" onclick="selectGarage(${index})" data-garage-index="${index}">
+                    <div class="garage-header">
+                        <div class="garage-name">${garage.name}</div>
+                        <div class="garage-rating">
+                            <span class="stars">${'★'.repeat(Math.floor(garage.rating))}${'☆'.repeat(5-Math.floor(garage.rating))}</span>
+                            <span>${garage.rating}</span>
+                        </div>
+                    </div>
+                    <div class="garage-details">
+                        <div class="detail-item">
+                            <span>📍</span>
+                            <span>${garage.distance} - ${garage.location}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>⏱️</span>
+                            <span>ETA: ${garage.eta}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>⏳</span>
+                            <span>Wait: ${garage.waitTime}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>👨‍🔧</span>
+                            <span>${garage.mechanics} mechanics</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>🔧</span>
+                            <span>${garage.specialties.join(', ')}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>📋</span>
+                            <span>Specializes in ${faultData.type || 'general'} repairs</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectGarage(index) {
+            selectedGarage = index;
+            const garage = sriLankanGarages[index];
+            
+            // Remove previous selection
+            document.querySelectorAll('.garage-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Select current garage
+            document.querySelectorAll('.garage-item')[index].classList.add('selected');
+            
+            const bookingRef = `#AG${Date.now().toString().slice(-6)}`;
+            
+            if (!isDrivable) {
+                addMessage(`✅ **Garage Selected**: ${garage.name}\n\n**Booking Confirmed** ${bookingRef}\n\nAfter the mechanic picks up your vehicle, it will be taken directly to ${garage.name}. They specialize in ${garage.specialties.join(' and ')} repairs.\n\n📞 **Garage Contact**: +94 11 ${Math.floor(Math.random() * 900 + 100)} ${Math.floor(Math.random() * 9000 + 1000)}\n\nEstimated total time including pickup: ${parseInt(faultDatabase[faultData.type].causes[0].time) + 1}-${parseInt(faultDatabase[faultData.type].causes[0].time) + 2} hours`);
+            } else {
+                addMessage(`✅ **Booking Confirmed** at ${garage.name}\n\n**Reference**: ${bookingRef}\n**Address**: ${garage.location}\n**ETA to garage**: ${garage.eta}\n**Expected wait**: ${garage.waitTime}\n\nThey've been notified of your ${faultData.type} issue and will have the necessary parts ready. Drive carefully and avoid highways if possible.\n\n📞 **Contact**: +94 11 ${Math.floor(Math.random() * 900 + 100)} ${Math.floor(Math.random() * 9000 + 1000)}`);
+            }
+            
+            updateProgress(3);
+            
+            // Simulate repair progress
+            setTimeout(() => {
+                updateProgress(4);
+                addMessage("🔧 **Service Update**: Work has started on your vehicle. The mechanic is currently diagnosing the exact issue.");
+            }, 4000);
+            
+            setTimeout(() => {
+                updateProgress(5);
+                addMessage(`🎉 **Service Complete**: Your ${faultData.type} issue has been successfully resolved! Total time: ${faultDatabase[faultData.type].causes[0].time}. Your vehicle is ready for pickup.\n\n💰 **Estimated Cost**: Rs. ${Math.floor(Math.random() * 15000 + 5000).toLocaleString()}\n\nPlease rate your experience to help us improve our service!`);
+            }, 8000);
+        }
+
+        function updateProgress(step) {
+            currentStep = step;
+            
+            // Update progress fill
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = `${((step - 1) / 4) * 100}%`;
+            
+            // Update step indicators
+            for (let i = 1; i <= 5; i++) {
+                const stepElement = document.getElementById(`step${i}`);
+                stepElement.className = 'progress-step';
+                
+                if (i < step) {
+                    stepElement.classList.add('completed');
+                } else if (i === step) {
+                    stepElement.classList.add('active');
+                }
+            }
+        }
+
+        // Demo functions
+        function startBatteryDemo() {
+            resetSystem();
+            setTimeout(() => {
+                document.getElementById('messageInput').value = "My car battery died completely and won't start at all";
+                sendMessage();
+            }, 800);
+            
+            setTimeout(() => {
+                document.getElementById('messageInput').value = "I was driving at about 50 km/h";
+                sendMessage();
+            }, 3000);
+            
+            setTimeout(() => {
+                document.getElementById('messageInput').value = "The car gradually lost power over 2-3 minutes";
+                sendMessage();
+            }, 5500);
+            
+            setTimeout(() => {
+                document.getElementById('messageInput').value = "Battery warning light was on and headlights were very dim";
+                sendMessage();
+            }, 8000);
+        }
+
+        function startEngineDemo() {
+            resetSystem();
+            setTimeout(() => {
+                document.getElementById('messageInput').value = "My engine is making strange knocking noises";
+                sendMessage();
+            }, 800);
+            
+            setTimeout(() => {
+                document.getElementById('messageInput').value = "Started at around 40 km/h on the highway";
+                sendMessage();
+            }, 3000);
+            
+            setTimeout(() => {
+                document.getElementById('messageInput').value = "Been hearing it for about 15 minutes now";
+                sendMessage();
+            }, 5500);
+            
+            setTimeout(() => {
+                document.getElementById('messageInput').value = "No warning lights but there's a slight burning smell";
+                sendMessage();
+            }, 8000);
+        }
+
+        function resetSystem() {
+            // Reset chat
+            document.getElementById('chatMessages').innerHTML = `
+                <div class="message bot">
+                    <div class="message-content">
+                        Hi! I'm your AI garage assistant. I'll help diagnose your vehicle issue and arrange the best solution. What seems to be wrong with your vehicle today?
+                    </div>
+                </div>
+            `;
+            
+            // Reset garage recommendations
+            document.getElementById('garageList').innerHTML = `
+                <p style="text-align: center; color: #666; padding: 60px 20px;">
+                    Complete the diagnostic chat to see personalized garage recommendations
+                </p>
+            `;
+            
+            // Hide dispatch and diagnosis panels
+            document.getElementById('mechanicDispatch').classList.remove('show');
+            document.getElementById('diagnosisResults').classList.remove('show');
+            
+            // Reset variables
+            chatStep = 0;
+            currentStep = 1;
+            selectedGarage = null;
+            faultData = {};
+            isDrivable = true;
+            
+            updateProgress(1);
+        }
+
+        // Event listeners
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Initialize system
+        updateProgress(1);
+
+        // Simulated Google Maps integration (you can replace this with actual Google Maps API)
+        function initializeMap() {
+            // This would initialize Google Maps with garage locations
+            console.log('Map would be initialized here with garage locations');
+        }
+
+        // Load Google Maps API (commented out for demo - uncomment and add your API key)
+        /*
+        function loadGoogleMaps() {
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initializeMap`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+        
+        // Uncomment to load Google Maps
+        // loadGoogleMaps();
+        */
+    </script>
+</body>
+</html>
